@@ -1,12 +1,16 @@
 import mongoose from "mongoose";
 
 const weatherSchema = new mongoose.Schema({
-  profileId: String,
-  latitude: Number,
-  longitude: Number,
   timestamp: Date,
+  metadata: Object,
+  percentage_light_intensity: Number,
+  pressure: Number,
+  coordinates: Array,
+  createAt: Date,
   temperature: Number,
   humidity: Number
+}, { 
+  strict: false
 });
 
-export default mongoose.model("Weather", weatherSchema);
+export default mongoose.model("weather_data", weatherSchema, "weather_data");

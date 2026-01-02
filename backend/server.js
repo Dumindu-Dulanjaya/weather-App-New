@@ -14,27 +14,60 @@ mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected"))
   .catch(err => console.log(err));
 
-// Get latest location per profile
+// Get latest location per profile (using coordinates)
 app.get("/api/profiles/latest", async (req, res) => {
-  const data = await Weather.aggregate([
-    { $sort: { timestamp: -1 } },
-    {
-      $group: {
-        _id: "$profileId",
-        latest: { $first: "$$ROOT" }
-      }
-    }
-  ]);
+  try {
+    // Get all unique coordinate pairs and their latest data
+    const data = await Weather.aggregate([
+      { $sort: { timestamp: -1 } },
+      {
+        $group: {
+          _id: { 
+            lat: { $arrayElemAt: ["$coordinates", 0] },  // First element is latitude
+            lng: { $arrayElemAt: ["$coordinates", 1] }   // Second element is longitude
+          },
+          latest: { $first: "$$ROOT" }
+        }
+      },
+      { $limit: 10 }
+    ]);
 
-  res.json(data.map(d => d.latest));
+    const profiles = data.map(d => ({
+      ...d.latest,
+      profileId: d._id.lat + "_" + d._id.lng
+    }));
+
+    res.json(profiles);
+  } catch (err) {
+    console.error('Error:', err);
+    res.status(500).json({ error: err.message });
+  }
 });
 
 // Get time-series data for one profile
 app.get("/api/profile/:id", async (req, res) => {
-  const data = await Weather.find({ profileId: req.params.id })
-    .sort({ timestamp: 1 });
+  try {
+    // Extract lat/lng from profileId
+    const [lat, lng] = req.params.id.split('_').map(Number);
+    
+    const data = await Weather.find({ 
+      coordinates: { $exists: true }
+    }).sort({ timestamp: 1 });
+    
+    // Filter by matching coordinates
+    const filtered = data.filter(doc => {
+      if (doc.coordinates && doc.coordinates.length === 2) {
+        return Math.abs(doc.coordinates[0] - lat) < 0.0001 && 
+               Math.abs(doc.coordinates[1] - lng) < 0.0001;
+      }
+      return false;
+    });
 
-  res.json(data);
+    res.json(filtered);
+  } catch (err) {
+    console.error('Error:', err);
+    res.status(500).json({ error: err.message });
+  }
 });
 
 app.listen(5000, () => {
