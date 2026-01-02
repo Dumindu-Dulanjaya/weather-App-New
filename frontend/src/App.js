@@ -5,9 +5,10 @@ import ProfileDetails from './components/ProfileDetails';
 import './App.css';
 
 // Use local backend for development, deployed backend for production
-const API_URL = process.env.NODE_ENV === 'production' 
-  ? 'https://weather-app-new-production.up.railway.app'
-  : 'http://localhost:5000';
+const API_URL = process.env.REACT_APP_API_URL || 
+  (process.env.NODE_ENV === 'production' 
+    ? 'https://weather-app-new-production.up.railway.app'
+    : 'http://localhost:5000');
 
 function App() {
   const [profiles, setProfiles] = useState([]);
