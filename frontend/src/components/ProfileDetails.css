@@ -4,57 +4,86 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 2000;
   padding: 20px;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .profile-details-container {
   background: white;
-  border-radius: 12px;
+  border-radius: 16px;
   max-width: 1200px;
   width: 100%;
   max-height: 90vh;
   overflow-y: auto;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4);
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 .details-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 30px;
-  border-bottom: 2px solid #f0f0f0;
+  padding: 25px 35px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.3);
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
-  border-radius: 12px 12px 0 0;
+  border-radius: 16px 16px 0 0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .details-header h2 {
   margin: 0;
-  font-size: 1.5rem;
+  font-size: 1.8rem;
+  font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .close-btn {
   background: rgba(255, 255, 255, 0.2);
-  border: none;
+  border: 2px solid rgba(255, 255, 255, 0.3);
   color: white;
   font-size: 1.5rem;
-  width: 40px;
-  height: 40px;
+  width: 45px;
+  height: 45px;
   border-radius: 50%;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.3s;
+  transition: all 0.3s ease;
+  font-weight: bold;
 }
 
 .close-btn:hover {
   background: rgba(255, 255, 255, 0.3);
+  transform: rotate(90deg);
+  border-color: rgba(255, 255, 255, 0.5);
 }
 
 .details-content {
@@ -69,16 +98,26 @@
 }
 
 .chart-card {
-  background: #f8f9fa;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(102, 126, 234, 0.1);
+  transition: all 0.3s ease;
+}
+
+.chart-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
 }
 
 .chart-card h3 {
-  margin: 0 0 15px 0;
+  margin: 0 0 20px 0;
   color: #667eea;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  border-left: 4px solid #667eea;
+  padding-left: 15px;
 }
 
 .chart-wrapper {
@@ -87,20 +126,27 @@
 }
 
 .data-summary {
-  background: #f8f9fa;
-  padding: 20px;
-  border-radius: 8px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  padding: 25px;
+  border-radius: 12px;
   margin-top: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(102, 126, 234, 0.1);
 }
 
 .data-summary h3 {
   color: #667eea;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  border-left: 4px solid #667eea;
+  padding-left: 15px;
 }
 
 .data-summary p {
-  margin: 8px 0;
-  color: #333;
+  margin: 10px 0;
+  color: #444;
+  font-size: 0.95rem;
 }
 
 @media (max-width: 768px) {
@@ -117,7 +163,7 @@
   }
 
   .details-header h2 {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
   }
 
   .details-content {
