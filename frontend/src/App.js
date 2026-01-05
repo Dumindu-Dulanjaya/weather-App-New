@@ -15,9 +15,17 @@ function App() {
   const [selectedProfile, setSelectedProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [lastUpdate, setLastUpdate] = useState(new Date());
 
   useEffect(() => {
     fetchLatestProfiles();
+    
+    // Auto-refresh every 60 seconds
+    const interval = setInterval(() => {
+      fetchLatestProfiles();
+    }, 60000);
+
+    return () => clearInterval(interval);
   }, []);
 
   const fetchLatestProfiles = async () => {
@@ -25,6 +33,7 @@ function App() {
       setLoading(true);
       const response = await axios.get(`${API_URL}/api/profiles/latest`);
       setProfiles(response.data);
+      setLastUpdate(new Date());
       setError(null);
     } catch (err) {
       console.error('Error fetching profiles:', err);
@@ -55,7 +64,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h1>🌦️ Sri Lanka Weather Data Map</h1>
-        <p>Interactive Weather Monitoring System</p>
+        <p>Interactive Weather Monitoring System • Live Updates</p>
       </header>
 
       {loading && (
@@ -68,7 +77,7 @@ function App() {
       {error && (
         <div className="error-banner">
           <p>⚠️ {error}</p>
-          <button onClick={fetchLatestProfiles}>Retry</button>
+          <button onClick={fetchLatestProfiles}>🔄 Retry Connection</button>
         </div>
       )}
 
@@ -94,7 +103,7 @@ function App() {
             </div>
             <div className="stat">
               <span className="stat-label">Last Updated</span>
-              <span className="stat-value">{new Date().toLocaleTimeString()}</span>
+              <span className="stat-value">{lastUpdate.toLocaleTimeString()}</span>
             </div>
           </div>
         </>

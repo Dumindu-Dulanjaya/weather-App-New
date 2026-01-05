@@ -44,10 +44,12 @@ const ProfileDetails = ({ profile, onClose }) => {
     labels,
     datasets: [{
       label: 'Temperature (°C)',
-      data: sortedData.map(d => d.temperature),
+      data: sortedData.map(d => d.temperature || 0),
       borderColor: 'rgb(255, 99, 132)',
       backgroundColor: 'rgba(255, 99, 132, 0.2)',
-      tension: 0.3
+      tension: 0.3,
+      pointRadius: 4,
+      pointHoverRadius: 6
     }]
   };
 
@@ -55,10 +57,12 @@ const ProfileDetails = ({ profile, onClose }) => {
     labels,
     datasets: [{
       label: 'Humidity (%)',
-      data: sortedData.map(d => d.humidity),
+      data: sortedData.map(d => d.humidity || 0),
       borderColor: 'rgb(53, 162, 235)',
       backgroundColor: 'rgba(53, 162, 235, 0.2)',
-      tension: 0.3
+      tension: 0.3,
+      pointRadius: 4,
+      pointHoverRadius: 6
     }]
   };
 
@@ -66,10 +70,12 @@ const ProfileDetails = ({ profile, onClose }) => {
     labels,
     datasets: [{
       label: 'Pressure (hPa)',
-      data: sortedData.map(d => d.pressure),
+      data: sortedData.map(d => d.pressure || 0),
       borderColor: 'rgb(75, 192, 192)',
       backgroundColor: 'rgba(75, 192, 192, 0.2)',
-      tension: 0.3
+      tension: 0.3,
+      pointRadius: 4,
+      pointHoverRadius: 6
     }]
   };
 
@@ -77,26 +83,66 @@ const ProfileDetails = ({ profile, onClose }) => {
     labels,
     datasets: [{
       label: 'Light Intensity (%)',
-      data: sortedData.map(d => d.percentage_light_intensity || 0),
+      data: sortedData.map(d => d.percentage_light_intensity !== undefined && d.percentage_light_intensity !== null ? d.percentage_light_intensity : 0),
       borderColor: 'rgb(255, 205, 86)',
       backgroundColor: 'rgba(255, 205, 86, 0.2)',
-      tension: 0.3
+      tension: 0.3,
+      pointRadius: 4,
+      pointHoverRadius: 6
     }]
   };
 
   const options = {
     responsive: true,
     maintainAspectRatio: false,
+    interaction: {
+      mode: 'index',
+      intersect: false,
+    },
     plugins: {
       legend: {
         position: 'top',
+        labels: {
+          color: '#00f5ff',
+          font: {
+            size: 12,
+            weight: 'bold'
+          }
+        }
+      },
+      tooltip: {
+        backgroundColor: 'rgba(15, 12, 41, 0.95)',
+        titleColor: '#00f5ff',
+        bodyColor: '#ffffff',
+        borderColor: '#00f5ff',
+        borderWidth: 1,
+        padding: 12,
+        displayColors: true
       }
     },
     scales: {
       x: {
         ticks: {
           maxRotation: 45,
-          minRotation: 45
+          minRotation: 45,
+          color: 'rgba(255, 255, 255, 0.7)',
+          font: {
+            size: 10
+          }
+        },
+        grid: {
+          color: 'rgba(255, 255, 255, 0.1)'
+        }
+      },
+      y: {
+        ticks: {
+          color: 'rgba(255, 255, 255, 0.7)',
+          font: {
+            size: 10
+          }
+        },
+        grid: {
+          color: 'rgba(255, 255, 255, 0.1)'
         }
       }
     }

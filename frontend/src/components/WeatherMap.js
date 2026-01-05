@@ -55,10 +55,12 @@ const WeatherMap = ({ profiles, onProfileClick, selectedProfileId }) => {
               key={profile.profileId || profile._id || index}
               position={coords}
               eventHandlers={{
-                click: () => onProfileClick(profile.profileId || profile._id)
+                click: () => {
+                  onProfileClick(profile.profileId || profile._id);
+                }
               }}
             >
-              <Popup>
+              <Popup maxWidth={500} minWidth={420}>
                 <div className="popup-content">
                   <h3>Profile: {profile.profileId || 'Unknown'}</h3>
                   <p><strong>🌡️ Temperature:</strong> {profile.temperature}°C</p>
@@ -69,7 +71,10 @@ const WeatherMap = ({ profiles, onProfileClick, selectedProfileId }) => {
                   )}
                   <p><strong>📅 Time:</strong> {new Date(profile.timestamp).toLocaleString()}</p>
                   <button 
-                    onClick={() => onProfileClick(profile.profileId || profile._id)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onProfileClick(profile.profileId || profile._id);
+                    }}
                     className="view-details-btn"
                   >
                     View Details
