@@ -29,7 +29,7 @@ app.get("/api/profiles/latest", async (req, res) => {
           latest: { $first: "$$ROOT" }
         }
       },
-      { $limit: 10 }
+      { $limit: 5 }
     ]);
 
     const profiles = data.map(d => ({
