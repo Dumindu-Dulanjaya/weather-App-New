@@ -1,9 +1,9 @@
 .map-container {
-  height: calc(100vh - 250px);
-  width: calc(100% - 80px);
+  height: calc(100vh - 200px);
+  width: calc(100% - 10px);
   position: relative;
-  margin: 30px 40px 100px 40px;
-  border-radius: 25px;
+  margin: 10px 5px 90px 5px;
+  border-radius: 0;
   overflow: hidden;
   box-shadow: 
     0 20px 60px rgba(0, 0, 0, 0.5),
@@ -25,7 +25,7 @@
 }
 
 .leaflet-container {
-  border-radius: 25px;
+  border-radius: 0;
   font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   filter: brightness(0.9) contrast(1.1);
 }
