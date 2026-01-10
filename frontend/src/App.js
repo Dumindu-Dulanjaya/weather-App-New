@@ -4,10 +4,10 @@ import WeatherMap from './components/WeatherMap';
 import ProfileDetails from './components/ProfileDetails';
 import './App.css';
 
-// Use local backend for development, AWS backend for production
+// Use local backend for development, Railway backend for production
 const API_URL = process.env.REACT_APP_API_URL || 
   (process.env.NODE_ENV === 'production' 
-    ? 'http://16.171.43.124:5000'
+    ? 'https://weather-app-new-production.up.railway.app'
     : 'http://localhost:5000');
 
 function App() {
