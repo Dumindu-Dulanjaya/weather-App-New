@@ -14,6 +14,24 @@ mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected"))
   .catch(err => console.log(err));
 
+// Root endpoint - API information
+app.get("/", (req, res) => {
+  res.json({
+    name: "Sri Lanka Weather Data API",
+    version: "1.0.0",
+    status: "Running",
+    endpoints: {
+      latestProfiles: "/api/profiles/latest",
+      profileData: "/api/profile/:id"
+    },
+    deployment: {
+      platform: "AWS EC2 Ubuntu",
+      database: "MongoDB Atlas",
+      processManager: "PM2"
+    }
+  });
+});
+
 // Get latest location per profile (using coordinates)
 app.get("/api/profiles/latest", async (req, res) => {
   try {
